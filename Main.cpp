@@ -229,7 +229,7 @@ int length = 0;
 
 #pragma region Implementations
 
-void CodeNode::run(){
+void CodeNode::run() {
 	LineNode* line = &lines.at(first_line_number);
 	line->instruction->run();
 	if (line->go != NULL) {
@@ -424,14 +424,14 @@ void consume(string symbol) {
 }
 
 bool check(string symbol) {
-	if (position >= length){
+	if (position >= length) {
 		return false;
 	}
 	int positionTemp = position;
 	for (char& character : symbol) {
 		while (is_whitespace(input->at(positionTemp))) {
 			positionTemp++;
-			if (positionTemp >= length){
+			if (positionTemp >= length) {
 				return false;
 			}
 		}
@@ -592,7 +592,7 @@ InstructionNode* parse_instruction() {
 	if (check(PRINT) || check(READ)) {
 		return parse_command();
 	}
-	return parse_assignment();	
+	return parse_assignment();
 }
 
 InstructionNode* parse_command() {
@@ -637,7 +637,7 @@ GotoNode* parse_goto() {
 	int address1 = parse_bits();
 	if (check(IF_THE_JUMP_REGISTER_IS)) {
 		consume(IF_THE_JUMP_REGISTER_IS);
-		if (check(EQUAL_TO)){
+		if (check(EQUAL_TO)) {
 			consume(EQUAL_TO);
 		}
 		int bit1 = parse_bit();
@@ -646,7 +646,7 @@ GotoNode* parse_goto() {
 			consume(GOTO);
 			int address2 = parse_bits();
 			consume(IF_THE_JUMP_REGISTER_IS);
-			if (check(EQUAL_TO)){
+			if (check(EQUAL_TO)) {
 				consume(EQUAL_TO);
 			}
 			int bit2 = parse_bit();
@@ -769,8 +769,9 @@ int parse_bit() {
 #pragma endregion
 
 int main() {
-	//run_code(parse(&helloworld));
-	//run_code(parse(&helloworldshort));
-	//run_code(parse(&bitaddition));
-	run_code(parse(&repeatones_original));
+	for (std::string line; std::getline(std::cin, line);) {
+		run_code(parse(&line));
+		cout << "\n";
+	}
+	return 0;
 }
